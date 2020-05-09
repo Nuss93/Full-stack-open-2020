@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Header from './views/Header';
-import Content from './views/Content';
-import Total from './views/Total';
+import Header from './components/Header';
+import Content from './components/Content';
+import Total from './components/Total';
 
 const App = () => {
   const course = 'Half Stack application development'

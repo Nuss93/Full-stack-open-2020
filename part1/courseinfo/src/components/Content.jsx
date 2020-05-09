@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Part from './Part'
 
 export default class Content extends Component {
     static propTypes = {
@@ -13,17 +14,11 @@ export default class Content extends Component {
 
     render() {
         return (
-            <>
-                <p>
-                    {this.props.part1} {this.props.exercises1}
-                </p>
-                <p>
-                    {this.props.part2} {this.props.exercises2}
-                </p>
-                <p>
-                    {this.props.part3} {this.props.exercises3}
-                </p>
-            </>
+            <div>
+                <Part part_name={this.props.part1} exercise={this.props.exercises1} />
+                <Part part_name={this.props.part2} exercise={this.props.exercises2} />
+                <Part part_name={this.props.part3} exercise={this.props.exercises3} />
+            </div>
         )
     }
 }
