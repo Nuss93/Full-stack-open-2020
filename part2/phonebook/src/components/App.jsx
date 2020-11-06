@@ -1,4 +1,14 @@
-import React, { Children, useState } from 'react'
+import React, { useState } from 'react'
+import PersonForm from './PersonForm'
+import Persons from './Persons'
+
+const Filter = ({ handleSearch, search }) => {
+  return (
+    <div className="mb-4">
+      Search : <input name="search" type="text" onChange={handleSearch} value={search} />
+    </div>
+  )
+}
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -28,8 +38,6 @@ const App = () => {
   const submitPerson = (event) => {
     event.preventDefault()
 
-    console.log(persons, input);
-
     let CHECKER = persons.findIndex(a => a.name.toLowerCase() === input.name.toLowerCase())
 
     if(CHECKER !== -1){
@@ -45,41 +53,16 @@ const App = () => {
     setPersons(newPersons)
     setNewInput({ name: '', number: '' })
   }
-
-  const displayPersons = () => {
-    let display
-    let filteredData = persons.filter(a => a.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
-
-    display =
-    <ul>
-      {filteredData.map((data,index) => <li key={index}>{data.name} {data.number}</li>)}
-    </ul>
-
-    return display
-  }
   return (
     <div>
       <h2 className="m-0">Search Phonebook</h2>
-      <div className="mb-4">
-        Search : <input name="search" type="text" onChange={handleSearch} value={search} />
-      </div>
+      <Filter handleSearch={handleSearch} search={search} />
 
       <h2 className="m-0">Add New Contact</h2>
-      <form onSubmit={submitPerson} className="mb-4">
-        <div>
-          Name: <input name="name" type="text" onChange={handleChange} value={input.name} />
-        </div>
-        <div>
-          Number: <input name="number" type="number" onChange={handleChange} value={input.number} />
-        </div>
-
-        <div>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+      <PersonForm submitPerson={submitPerson} handleChange={handleChange} input={input} />
 
       <h2>Phone Numbers</h2>
-      {displayPersons()}
+      <Persons persons={persons} search={search} />
     </div>
   )
 }
