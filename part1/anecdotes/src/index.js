@@ -9,25 +9,34 @@ const App = (props) => {
 
   const returnRandomAnecdote = () => {
     let RANDOM = Math.floor(Math.random() * props.anecdotes.length)
-    console.log(RANDOM)
+    // console.log(RANDOM)
     setSelected(RANDOM)
   }
   const voteQuote = () => {
     let newPoints = [...points]
     newPoints[selected] += 1
-
-    // console.log(points)
-    // console.log(newPoints)
+    
     setPoints(newPoints)
+  }
+  const getHighestVote = () => {
+    return points.indexOf(Math.max(...points));
   }
 
   return (
     <div>
-      <div className="card p-4 mb-2 border-dark rounded">{props.anecdotes[selected]}</div>
-      <div className="mb-3 text-danger font-weight-bold">has {points[selected]} votes</div>
+      <div className="mb-4">
+        <h3 className="m-0">Anecdote of the day</h3>
+        <div className="card p-4 mb-2 border-dark rounded">{props.anecdotes[selected]}</div>
+        <div className="mb-3 text-danger font-weight-bold">has {points[selected]} votes</div>
 
-      <button className="btn btn-success mr-2" onClick={voteQuote}>Vote</button>
-      <button className="btn btn-info" onClick={returnRandomAnecdote}>Next anecdote</button>
+        <button className="btn btn-success mr-2" onClick={voteQuote}>Vote</button>
+        <button className="btn btn-info" onClick={returnRandomAnecdote}>Next anecdote</button>
+      </div>
+      <div>
+        <h3 className="m-0">Anecdote with most votes</h3>
+        <div className="card p-4 mb-2 border-dark rounded">{props.anecdotes[getHighestVote()]}</div>
+        <div className="mb-3 text-danger font-weight-bold">has {points[getHighestVote()]} votes</div>
+      </div>
     </div>
   )
 }
