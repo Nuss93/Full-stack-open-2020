@@ -5,9 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Statistic = (props) => {
   return (
-    <div className="d-flex align-items-center justify-content-between" style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px', width:'33.33%'}}>
-      <span>{props.text}</span> <b>{props.value}</b>
-    </div>
+    <tr>
+      <td style={{width:'25%'}}>{props.text}</td>
+      <td style={{width:'15%'}}>{props.value}</td>
+    </tr>
   )
 }
 const Statistics = ({ feedback, statistics}) => {
@@ -22,17 +23,16 @@ const Statistics = ({ feedback, statistics}) => {
   return (
     <>
       <h4 className="m-0">Statistics</h4>
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <Statistic text="Good" value={feedback.good} />
-        <Statistic text="Neutral" value={feedback.neutral} />
-        <Statistic text="Bad" value={feedback.bad} />
-      </div>
-
-      <div className="d-flex align-items-center justify-content-between">
-        <Statistic text="All" value={statistics.totalFeedback} />
-        <Statistic text="Average" value={statistics.averageFeedback.toFixed(4)} />
-        <Statistic text="Positive" value={statistics.positiveFeedback} />
-      </div>
+      <table className="table table-bordered" style={{width:'50%'}}>
+        <tbody>
+          <Statistic text="Good" value={feedback.good} />
+          <Statistic text="Neutral" value={feedback.neutral} />
+          <Statistic text="Bad" value={feedback.bad} />
+          <Statistic text="All" value={statistics.totalFeedback} />
+          <Statistic text="Average" value={statistics.averageFeedback.toFixed(4)} />
+          <Statistic text="Positive" value={statistics.positiveFeedback} />
+        </tbody>
+      </table>
     </>
   )
 }
