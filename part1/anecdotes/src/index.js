@@ -5,15 +5,28 @@ import './index.css';
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Array(props.anecdotes.length).fill(0))
 
   const returnRandomAnecdote = () => {
     let RANDOM = Math.floor(Math.random() * props.anecdotes.length)
     console.log(RANDOM)
     setSelected(RANDOM)
   }
+  const voteQuote = () => {
+    let newPoints = [...points]
+    newPoints[selected] += 1
+
+    // console.log(points)
+    // console.log(newPoints)
+    setPoints(newPoints)
+  }
+
   return (
     <div>
-      <div className="card p-4 mb-3 border-dark rounded">{props.anecdotes[selected]}</div>
+      <div className="card p-4 mb-2 border-dark rounded">{props.anecdotes[selected]}</div>
+      <div className="mb-3 text-danger font-weight-bold">has {points[selected]} votes</div>
+
+      <button className="btn btn-success mr-2" onClick={voteQuote}>Vote</button>
       <button className="btn btn-info" onClick={returnRandomAnecdote}>Next anecdote</button>
     </div>
   )
