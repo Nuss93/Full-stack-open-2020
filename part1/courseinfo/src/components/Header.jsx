@@ -1,14 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 
-export default class Header extends Component {
-    static propTypes = {
-        course: PropTypes.string,
-    }
-
-    render() {
-        return (
-            <h1>{this.props.course}</h1>
-        )
-    }
+export default function Header(props) {
+    return ( <h1>{props.course}</h1> )
 }

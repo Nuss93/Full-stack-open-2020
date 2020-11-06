@@ -4,7 +4,8 @@ Full stack open 2020 course exercises
 ## Directory
 ```
 .
+├── README.md
 ├── part0
-├── part1
-└── README.md
+└── part1
+    └── courseinfo
 ```

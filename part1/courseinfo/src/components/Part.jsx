@@ -1,15 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 
-export default class Part extends Component {
-    static propTypes = {
-        part_name: PropTypes.string,
-        exercise: PropTypes.number,
-    }
-
-    render() {
-        return (
-            <p>{this.props.part_name} {this.props.exercise}</p>
-        )
-    }
+export default function Part(props) {
+    return ( <p>{props.part_name} {props.exercise}</p> )
 }
+
