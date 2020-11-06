@@ -1,6 +1,9 @@
 import React from 'react'
 
 export default function Part(props) {
-    return ( <p>{props.part_name} {props.exercise}</p> )
+    let item = props.item
+    return (
+        <p>{item.name} {item.exercises}</p>
+    )
 }
 
