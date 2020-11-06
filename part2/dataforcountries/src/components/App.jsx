@@ -10,14 +10,21 @@ const Filter = ({ handleSearch, search }) => {
 }
 
 const DisplayCountry = ({ countries, search }) => {
+  const [selected, setSelected] = useState({})
+
   let filteredData = countries.filter(a => a.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
   console.log(filteredData);
+
+  const selectCountry = (select) => {
+    console.log(select);
+    setSelected(select)
+  }
 
   if(filteredData.length > 10){
     return <div>Too many matches, please be more specific.</div>
   }
-  if(filteredData.length === 1){
-    let data = filteredData[0]
+  if(filteredData.length === 1 || selected.name){
+    let data = filteredData.length === 1 ? filteredData[0] : selected
     return (
       <div>
         <h3 className="m-0 mb-2">{data.name}</h3>
@@ -30,11 +37,16 @@ const DisplayCountry = ({ countries, search }) => {
         <ul>
           {data.languages.map((item,index) => <li key={index}>{item.name}</li>)}
         </ul>
+
+        {selected.name ? <button className="btn btn-warning" onClick={() => {setSelected({})}}>Back</button> : null}
       </div>
     )
   }
   return filteredData.map((data,index) => (
-    <div key={index}>{data.name}</div>
+    <div key={index} className="mb-1">
+      {data.name}
+      <button className="btn btn-info btn-sm ml-3" onClick={() => {selectCountry(data)}}>Show More</button>
+    </div>
   ))
 }
 
