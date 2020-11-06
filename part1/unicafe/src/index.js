@@ -9,6 +9,17 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const totalFeedback = () => {
+    return parseInt(good) + parseInt(neutral) + parseInt(bad)
+  }
+  const averageFeedback = () => {
+    return totalFeedback()/3
+  }
+  const positiveFeedback = () => {
+    let GOOD = parseInt(good) * 1, NEUTRAL = parseInt(neutral) * 0, BAD = parseInt(bad) * -1
+    return GOOD + NEUTRAL + BAD
+  }
+
   return (
     <div>
       <h4 className="m-0">Give Feedback</h4>
@@ -19,14 +30,26 @@ const App = () => {
       </div>
 
       <h4 className="m-0">Statistics</h4>
+      <div className="d-flex align-items-center justify-content-between mb-3" style={{border:'1px solid lightgrey', padding:'15px', borderRadius:'0.5rem'}}>
+        <div>
+          Good : {good}
+        </div>
+        <div>
+          Neutral : {neutral}
+        </div>
+        <div>
+          Bad : {bad}
+        </div>
+      </div>
+
       <div>
-        Good : {good}
+        All : {totalFeedback()}
       </div>
       <div>
-        Neutral : {neutral}
+        Average : {averageFeedback().toFixed(4)}
       </div>
       <div>
-        Bad : {bad}
+        Positive : {positiveFeedback()}
       </div>
     </div>
   )
