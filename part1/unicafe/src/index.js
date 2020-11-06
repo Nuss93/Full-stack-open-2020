@@ -3,6 +3,36 @@ import ReactDOM from 'react-dom'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const Statistics = ({ feedback, statistics}) => {
+  // console.log(statistics)
+  return (
+    <>
+      <h4 className="m-0">Statistics</h4>
+      <div className="d-flex align-items-center justify-content-start mb-3">
+        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
+          Good : {feedback.good}
+        </div>
+        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
+          Neutral : {feedback.neutral}
+        </div>
+        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
+          Bad : {feedback.bad}
+        </div>
+      </div>
+
+      <div>
+        All : {statistics.totalFeedback}
+      </div>
+      <div>
+        Average : {statistics.averageFeedback.toFixed(4)}
+      </div>
+      <div>
+        Positive : {statistics.positiveFeedback}
+      </div>
+    </>
+  )
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -29,33 +59,11 @@ const App = () => {
         <button className="ml-1 mr-1 btn btn-danger" onClick={() => setBad(bad + 1)}>Bad</button>
       </div>
 
-      <h4 className="m-0">Statistics</h4>
-      <div className="d-flex align-items-center justify-content-between mb-3" style={{border:'1px solid lightgrey', padding:'15px', borderRadius:'0.5rem'}}>
-        <div>
-          Good : {good}
-        </div>
-        <div>
-          Neutral : {neutral}
-        </div>
-        <div>
-          Bad : {bad}
-        </div>
-      </div>
-
-      <div>
-        All : {totalFeedback()}
-      </div>
-      <div>
-        Average : {averageFeedback().toFixed(4)}
-      </div>
-      <div>
-        Positive : {positiveFeedback()}
-      </div>
+      <Statistics feedback={{'good':good, 'neutral':neutral, 'bad':bad}} statistics={{totalFeedback:totalFeedback(), averageFeedback:averageFeedback(), positiveFeedback:positiveFeedback()}} />
     </div>
   )
 }
-
-
+// statsictics={{totalFeedback:totalFeedback(), averageFeedback:averageFeedback(), positiveFeedback:positiveFeedback()}}
 ReactDOM.render(
   <React.StrictMode>
     <App />
