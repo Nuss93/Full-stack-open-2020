@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const Statistic = (props) => {
+  return (
+    <div className="d-flex align-items-center justify-content-between" style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px', width:'33.33%'}}>
+      <span>{props.text}</span> <b>{props.value}</b>
+    </div>
+  )
+}
 const Statistics = ({ feedback, statistics}) => {
   if(feedback.good === 0 && feedback.neutral === 0 && feedback.bad == 0){
     return (
@@ -15,58 +22,56 @@ const Statistics = ({ feedback, statistics}) => {
   return (
     <>
       <h4 className="m-0">Statistics</h4>
-      <div className="d-flex align-items-center justify-content-start mb-3">
-        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
-          Good : {feedback.good}
-        </div>
-        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
-          Neutral : {feedback.neutral}
-        </div>
-        <div style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>
-          Bad : {feedback.bad}
-        </div>
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <Statistic text="Good" value={feedback.good} />
+        <Statistic text="Neutral" value={feedback.neutral} />
+        <Statistic text="Bad" value={feedback.bad} />
       </div>
 
-      <div>
-        All : {statistics.totalFeedback}
-      </div>
-      <div>
-        Average : {statistics.averageFeedback.toFixed(4)}
-      </div>
-      <div>
-        Positive : {statistics.positiveFeedback}
+      <div className="d-flex align-items-center justify-content-between">
+        <Statistic text="All" value={statistics.totalFeedback} />
+        <Statistic text="Average" value={statistics.averageFeedback.toFixed(4)} />
+        <Statistic text="Positive" value={statistics.positiveFeedback} />
       </div>
     </>
   )
 }
+const Button = (props) => {
+  return <button className={`ml-1 mr-1 btn btn-${props.color}`} onClick={() => props.handleChange(props.text.toLowerCase())}>{props.text}</button>
+}
 
 const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [feedback, setFeedback] = useState({ good:0, neutral:0, bad:0 })
 
   const totalFeedback = () => {
-    return parseInt(good) + parseInt(neutral) + parseInt(bad)
+    return parseInt(feedback.good) + parseInt(feedback.neutral) + parseInt(feedback.bad)
   }
   const averageFeedback = () => {
     return totalFeedback()/3
   }
   const positiveFeedback = () => {
-    let GOOD = parseInt(good) * 1, NEUTRAL = parseInt(neutral) * 0, BAD = parseInt(bad) * -1
+    let GOOD = parseInt(feedback.good) * 1, NEUTRAL = parseInt(feedback.neutral) * 0, BAD = parseInt(feedback.bad) * -1
     return GOOD + NEUTRAL + BAD
+  }
+  const handleChange = (state) => {
+    let newFeedback = {
+      ...feedback,
+      [state] : feedback[state] + 1
+    }
+    
+    setFeedback(newFeedback)
   }
 
   return (
     <div>
       <h4 className="m-0">Give Feedback</h4>
       <div className="d-flex align-items-center justify-content-start mb-3">
-        <button className="ml-1 mr-1 btn btn-success" onClick={() => setGood(good + 1)}>Good</button>
-        <button className="ml-1 mr-1 btn btn-warning" onClick={() => setNeutral(neutral + 1)}>Neutral</button>
-        <button className="ml-1 mr-1 btn btn-danger" onClick={() => setBad(bad + 1)}>Bad</button>
+        <Button text="Good" handleChange={handleChange} color="success" />
+        <Button text="Neutral" handleChange={handleChange} color="warning" />
+        <Button text="Bad" handleChange={handleChange} color="danger" />
       </div>
 
-      <Statistics feedback={{'good':good, 'neutral':neutral, 'bad':bad}} statistics={{totalFeedback:totalFeedback(), averageFeedback:averageFeedback(), positiveFeedback:positiveFeedback()}} />
+      <Statistics feedback={feedback} statistics={{totalFeedback:totalFeedback(), averageFeedback:averageFeedback(), positiveFeedback:positiveFeedback()}} />
     </div>
   )
 }
