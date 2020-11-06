@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
+import axios from 'axios'
 
 const Filter = ({ handleSearch, search }) => {
   return (
@@ -11,15 +12,22 @@ const Filter = ({ handleSearch, search }) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
   // form data controll
   const [ input, setNewInput ] = useState({ name: '', number: '' })
   const [ search, setSearch ] = useState('')
+
+  useEffect(() => {
+    console.log('effect')
+    
+    axios
+      .get('http://localhost:5000/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        console.log(response.data);
+        setPersons(response.data)
+      })
+  }, [])
 
   const handleChange = (evt) => {
     let newInput = {
