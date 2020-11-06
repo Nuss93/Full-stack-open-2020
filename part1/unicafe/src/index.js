@@ -12,7 +12,7 @@ const Statistic = (props) => {
   )
 }
 const Statistics = ({ feedback, statistics}) => {
-  if(feedback.good === 0 && feedback.neutral === 0 && feedback.bad == 0){
+  if(feedback.good === 0 && feedback.neutral === 0 && feedback.bad === 0){
     return (
       <>
         <h4 className="m-0">Statistics</h4>
