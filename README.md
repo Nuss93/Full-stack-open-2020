@@ -7,5 +7,7 @@ Full stack open 2020 course exercises
 ├── README.md
 ├── part0
 └── part1
-    └── courseinfo
+    ├── anecdotes
+    ├── courseinfo
+    └── unicafe
 ```
