@@ -13,12 +13,21 @@ const App = () => {
 
   const submitName = (event) => {
     event.preventDefault()
-    console.log('button clicked')
+
+    let CHECKER = persons.findIndex(a => a.name.toLowerCase() === newName.toLowerCase())
+
+    if(CHECKER !== -1){
+      alert(`${newName} is already added to phonebook`)
+      setNewName('')
+      return
+    }
+
     let newPersons = [...persons]
     let newData = { name : newName }
     newPersons.push(newData)
 
     setPersons(newPersons)
+    setNewName('')
   }
 
   return (
