@@ -4,7 +4,14 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Statistics = ({ feedback, statistics}) => {
-  // console.log(statistics)
+  if(feedback.good === 0 && feedback.neutral === 0 && feedback.bad == 0){
+    return (
+      <>
+        <h4 className="m-0">Statistics</h4>
+        <div className="text-center" style={{border:'1px solid lightgrey', padding:'10px', borderRadius:'0.5rem', marginRight:'10px'}}>No feedback given</div>
+      </>
+    )
+  }
   return (
     <>
       <h4 className="m-0">Statistics</h4>
