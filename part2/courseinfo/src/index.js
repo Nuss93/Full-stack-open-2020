@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = ({ course }) => {
   return (
@@ -8,9 +10,10 @@ const Header = ({ course }) => {
 }
 
 const Total = ({ course }) => {
-  const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
+  const sum = course.parts.reduce((prev,current) => prev + current.exercises, 0)
+
   return(
-    <p>Number of exercises {sum}</p>
+    <p className="font-weight-bold">Number of exercises {sum}</p>
   ) 
 }
 
@@ -23,7 +26,7 @@ const Part = (props) => {
 }
 
 const Content = ({ course }) => {
-  console.log(course)
+  // console.log(course)
   return (
     <div>
       {course.parts.map((data,index) => <Part key={index} part={data} />)}
@@ -36,7 +39,7 @@ const Course = ({ course }) => {
     <div>
       <Header course={course} />
       <Content course={course} />
-      {/* <Total course={course} /> */}
+      <Total course={course} />
     </div>
   )
 }
