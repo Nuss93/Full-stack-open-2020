@@ -19,17 +19,18 @@ const DisplayCountry = ({ countries, search }) => {
   let filteredData = countries.filter(a => a.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
 
   useEffect(() => {
-    // console.log(filteredData[0].name, weather);
+    // console.log(weather);
 
     if((filteredData.length === 1 || selected.name) && weather === null){
       let country_name = filteredData.length === 1 ? filteredData[0].name : selected.name
-      console.log(`${weatherBaseURL}/current?access_key=${weatherstack_accesKey}&query=${country_name}`);
+
       axios.get(`${weatherBaseURL}/current?access_key=${weatherstack_accesKey}&query=${country_name}`).then(response => {
         setWeather(response.data)
         console.log(response.data);
       })
     }
     
+    // return () =>  setWeather(null)
   }, [selected, filteredData])
 
   useEffect(() => {
