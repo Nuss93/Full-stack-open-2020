@@ -58,6 +58,12 @@ const App = () => {
     let newData = input
     newPersons.push(newData)
 
+    axios.post('http://localhost:5000/persons', input).then(response => {
+      console.log('successfully added');
+    }).catch(err => {
+      console.log(err.message);
+    })
+
     setPersons(newPersons)
     setNewInput({ name: '', number: '' })
   }
