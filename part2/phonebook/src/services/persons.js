@@ -9,4 +9,8 @@ const createPerson = newPerson => {
     return axios.post(baseURL, newPerson).then(() => console.log('Operation success!'))
 }
 
-export default { getAll, createPerson }
+const deletePerson = id => {
+    return axios.delete(`${baseURL}/${id}`).then(() => console.log('Delete success!'))
+}
+
+export default { getAll, createPerson, deletePerson }

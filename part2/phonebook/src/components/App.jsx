@@ -52,7 +52,7 @@ const App = () => {
     }
 
     let newPersons = [...persons]
-    let newData = input
+    let newData = { ...input, id: newPersons.length + 1 }
     newPersons.push(newData)
 
     personService.createPerson(input).catch(err => {
@@ -61,6 +61,17 @@ const App = () => {
 
     setPersons(newPersons)
     setNewInput({ name: '', number: '' })
+  }
+  const deletePerson = data => {
+    let r = window.confirm(`Are you sure you want to delete the contact ${data.name}?`)
+    if(!r){ return }
+    
+    let newPersons = [...persons]
+
+    personService.deletePerson(data.id).then(() => {
+      newPersons.splice(data.id - 1, 1)
+      setPersons(newPersons)
+    }).catch(err => console.log(err.message))
   }
   return (
     <div>
@@ -71,7 +82,7 @@ const App = () => {
       <PersonForm submitPerson={submitPerson} handleChange={handleChange} input={input} />
 
       <h2>Phone Numbers</h2>
-      <Persons persons={persons} search={search} />
+      <Persons persons={persons} search={search} deletePerson={deletePerson} />
     </div>
   )
 }
