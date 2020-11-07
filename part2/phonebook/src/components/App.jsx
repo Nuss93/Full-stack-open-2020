@@ -46,10 +46,25 @@ const App = () => {
     let CHECKER = persons.findIndex(a => a.name.toLowerCase() === input.name.toLowerCase())
 
     if(CHECKER !== -1){
-      alert(`${input.name} is already added to phonebook`)
-      setNewInput('')
-      return
+      let r = window.confirm(`${input.name} is already added to the phonebook, do you want to replcae the old number with the new one?`)
+      if(!r){ 
+        setNewInput({ name: '', number: '' })
+        return
+      } else {
+        let newPersons = [...persons]
+        newPersons[CHECKER] = { ...persons[CHECKER], number : input.number }
+
+        const PERSONS = newPersons[CHECKER]
+        const changedPerson = { ...PERSONS, number : input.number }
+
+        personService.updateNumber(CHECKER + 1, changedPerson).then(() => {
+          setPersons(newPersons)
+          setNewInput({ name: '', number: '' })
+        })
+        return
+      }
     }
+    console.log('contingency');
 
     let newPersons = [...persons]
     let newData = { ...input, id: newPersons.length + 1 }
