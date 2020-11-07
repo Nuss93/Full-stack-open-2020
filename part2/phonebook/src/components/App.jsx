@@ -67,7 +67,12 @@ const App = () => {
           setTimeout(() => {
             setErrorMessage({ message: "", color: "success", display: false })
           }, 5000);
-        }).catch(err => {console.log(err.message)})
+        }).catch(err => {
+          setErrorMessage({message:`The number for ${PERSONS.name} has already been deleted!`, color:"danger", display:true})
+          setTimeout(() => {
+            setErrorMessage({ message: "", color: "success", display: false })
+          }, 5000);
+        })
         return
       }
     }
@@ -96,14 +101,15 @@ const App = () => {
     let newPersons = [...persons]
 
     personService.deletePerson(data.id).then(() => {
-      newPersons.splice(data.id - 1, 1)
+      let INDEX = persons.findIndex(a => a.id === data.id)
+      newPersons.splice(INDEX, 1)
       setPersons(newPersons)
 
       setErrorMessage({message:`Deleted ${data.name}!`, color:"danger", display:true})
       setTimeout(() => {
         setErrorMessage({ message: "", color: "success", display: false })
       }, 5000);
-    }).catch(err => console.log(err.message))
+    }).catch(err => {console.log(err.message)})
   }
   return (
     <div>

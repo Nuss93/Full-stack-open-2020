@@ -4,31 +4,6 @@
       "name": "Arto Hellas",
       "number": "040-123456",
       "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "9123123423",
-      "id": 2
-    },
-    {
-      "name": "Nasreen Razak",
-      "number": "333",
-      "id": 5
-    },
-    {
-      "name": "Sabrina",
-      "number": "444",
-      "id": 6
-    },
-    {
-      "name": "Haziq Faris",
-      "number": "987654321",
-      "id": 7
-    },
-    {
-      "name": "Adam Razak",
-      "number": "76342617623",
-      "id": 8
     }
   ]
 }
