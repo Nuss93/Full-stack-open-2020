@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+const weatherstack_accesKey = process.env.REACT_APP_WEATHER_API_KEY
+const weatherBaseURL = 'http://api.weatherstack.com/'
+const countriesBaseURL = 'https://restcountries.eu/rest/v2/all'
 
+console.log(weatherstack_accesKey)
 const Filter = ({ handleSearch, search }) => {
   return (
     <div className="mb-4">
@@ -11,12 +15,30 @@ const Filter = ({ handleSearch, search }) => {
 
 const DisplayCountry = ({ countries, search }) => {
   const [selected, setSelected] = useState({})
-
+  const [weather, setWeather] = useState(null)
   let filteredData = countries.filter(a => a.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
-  console.log(filteredData);
+
+  useEffect(() => {
+    // console.log(filteredData[0].name, weather);
+
+    if((filteredData.length === 1 || selected.name) && weather === null){
+      let country_name = filteredData.length === 1 ? filteredData[0].name : selected.name
+      console.log(`${weatherBaseURL}/current?access_key=${weatherstack_accesKey}&query=${country_name}`);
+      axios.get(`${weatherBaseURL}/current?access_key=${weatherstack_accesKey}&query=${country_name}`).then(response => {
+        setWeather(response.data)
+        console.log(response.data);
+      })
+    }
+    
+  }, [selected, filteredData])
+
+  useEffect(() => {
+    if(search === ""){
+      setWeather(null)
+    }
+  }, [search])
 
   const selectCountry = (select) => {
-    console.log(select);
     setSelected(select)
   }
 
@@ -38,7 +60,21 @@ const DisplayCountry = ({ countries, search }) => {
           {data.languages.map((item,index) => <li key={index}>{item.name}</li>)}
         </ul>
 
-        {selected.name ? <button className="btn btn-warning" onClick={() => {setSelected({})}}>Back</button> : null}
+        {weather !== null ?
+          <div>
+            <h4 className="m-0 mb-2">Weather in {weather.location.country}</h4>
+            <img src={weather.current.weather_icons[0]} />
+            <p>Temperature : {weather.current.temperature}</p>
+            <p>Wind : {weather.current.wind_speed} mph direction {weather.current.win_dir}</p>
+            <small>Last updated today @ {weather.current.observation_time}</small>
+          </div> : null
+        }
+        
+
+        {selected.name ? <button className="btn btn-warning" onClick={() => {
+          setWeather(null)
+          setSelected({})
+        }}>Back</button> : null}
       </div>
     )
   }
@@ -55,10 +91,11 @@ const App = () => {
   const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    axios.get('https://restcountries.eu/rest/v2/all').then(response => {
+    axios.get(countriesBaseURL).then(response => {
       setCountries(response.data)
     })
   }, [])
+  
 
   const handleSearch = (evt) => {
     let newInput = evt.target.value
