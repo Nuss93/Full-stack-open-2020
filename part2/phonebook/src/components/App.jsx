@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
 import axios from 'axios'
+import personService from '../services/persons'
 
 const Filter = ({ handleSearch, search }) => {
   return (
@@ -20,13 +21,9 @@ const App = () => {
   useEffect(() => {
     console.log('effect')
     
-    axios
-      .get('http://localhost:5000/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        console.log(response.data);
-        setPersons(response.data)
-      })
+    personService.getAll().then(response => {
+      setPersons(response)
+    })
   }, [])
 
   const handleChange = (evt) => {
@@ -58,9 +55,7 @@ const App = () => {
     let newData = input
     newPersons.push(newData)
 
-    axios.post('http://localhost:5000/persons', input).then(response => {
-      console.log('successfully added');
-    }).catch(err => {
+    personService.createPerson(input).catch(err => {
       console.log(err.message);
     })
 
