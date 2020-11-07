@@ -7,28 +7,28 @@
     },
     {
       "name": "Ada Lovelace",
-      "number": "39-44-5323523",
+      "number": "9123123423",
       "id": 2
     },
     {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Alberto Jr",
-      "number": "1112",
-      "id": 4
-    },
-    {
-      "name": "Nasreen",
-      "number": "4321",
+      "name": "Nasreen Razak",
+      "number": "333",
       "id": 5
     },
     {
-      "name": "Adam",
-      "number": "1300882525",
+      "name": "Sabrina",
+      "number": "444",
       "id": 6
+    },
+    {
+      "name": "Haziq Faris",
+      "number": "987654321",
+      "id": 7
+    },
+    {
+      "name": "Adam Razak",
+      "number": "76342617623",
+      "id": 8
     }
   ]
 }

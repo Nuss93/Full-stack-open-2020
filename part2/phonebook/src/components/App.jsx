@@ -3,6 +3,7 @@ import PersonForm from './PersonForm'
 import Persons from './Persons'
 import axios from 'axios'
 import personService from '../services/persons'
+import { PopUpMessage } from './PopUpMessage'
 
 const Filter = ({ handleSearch, search }) => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
   // form data controll
   const [ input, setNewInput ] = useState({ name: '', number: '' })
   const [ search, setSearch ] = useState('')
+  const [errorMessage, setErrorMessage] = useState({ message: "Message", color: "success", display: false })
 
   useEffect(() => {
     console.log('effect')
@@ -57,10 +59,15 @@ const App = () => {
         const PERSONS = newPersons[CHECKER]
         const changedPerson = { ...PERSONS, number : input.number }
 
-        personService.updateNumber(CHECKER + 1, changedPerson).then(() => {
+        personService.updateNumber(PERSONS.id, changedPerson).then(() => {
           setPersons(newPersons)
           setNewInput({ name: '', number: '' })
-        })
+
+          setErrorMessage({message:`Successfully updated ${input.name}!`, color:"success", display:true})
+          setTimeout(() => {
+            setErrorMessage({ message: "", color: "success", display: false })
+          }, 5000);
+        }).catch(err => {console.log(err.message)})
         return
       }
     }
@@ -70,12 +77,17 @@ const App = () => {
     let newData = { ...input, id: newPersons.length + 1 }
     newPersons.push(newData)
 
-    personService.createPerson(input).catch(err => {
+    personService.createPerson(input).then(() => {
+      setPersons(newPersons)
+      setNewInput({ name: '', number: '' })
+
+      setErrorMessage({message:`Successfully added ${input.name}!`, color:"success", display:true})
+      setTimeout(() => {
+        setErrorMessage({ message: "", color: "success", display: false })
+      }, 5000);
+    }).catch(err => {
       console.log(err.message);
     })
-
-    setPersons(newPersons)
-    setNewInput({ name: '', number: '' })
   }
   const deletePerson = data => {
     let r = window.confirm(`Are you sure you want to delete the contact ${data.name}?`)
@@ -86,6 +98,11 @@ const App = () => {
     personService.deletePerson(data.id).then(() => {
       newPersons.splice(data.id - 1, 1)
       setPersons(newPersons)
+
+      setErrorMessage({message:`Deleted ${data.name}!`, color:"danger", display:true})
+      setTimeout(() => {
+        setErrorMessage({ message: "", color: "success", display: false })
+      }, 5000);
     }).catch(err => console.log(err.message))
   }
   return (
@@ -98,6 +115,8 @@ const App = () => {
 
       <h2>Phone Numbers</h2>
       <Persons persons={persons} search={search} deletePerson={deletePerson} />
+
+      <PopUpMessage message={errorMessage} />
     </div>
   )
 }
