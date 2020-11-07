@@ -14,10 +14,7 @@ Full stack open 2020 course exercises
 │   ├── courseinfo
 │   └── unicafe
 └── part2
-    ├── README.md
-    ├── node_modules
-    ├── package-lock.json
-    ├── package.json
-    ├── public
-    └── src
+    ├── courseinfo
+    ├── dataforcountries
+    └── phonebook
 ```
